@@ -1,0 +1,64 @@
+#include <stdio.h>
+int main(){
+    printf("Panduan Tugas Akhir Algoritma dan Pemograman");
+}
+//  Nama : Permana Agung Yandika
+//  NIM  : 12250514334
+
+#include <iostream>
+using namespace std;
+
+// Fungsi untuk menampilkan menu ATM
+void displayMenu() {
+    cout << "=== ATM Agung ===" << endl;
+    cout << "1. Cek Saldo" << endl;
+    cout << "2. Tarik Tunai" << endl;
+    cout << "3. Setor Tunai" << endl;
+    cout << "4. Keluar" << endl;
+    cout << "================" << endl;
+    cout << "Pilih menu (1-4): ";
+}
+
+int main() {
+    // Saldo awal ATM
+    double saldo = 50000;
+    int pilihan;
+    double jumlah;
+
+    do {
+        displayMenu();
+        cin >> pilihan;
+
+        switch (pilihan) {
+            case 1:
+                cout << "Saldo Anda saat ini: $" << saldo << endl;
+                break;
+            case 2:
+                cout << "Masukkan jumlah yang ingin ditarik: $";
+                cin >> jumlah;
+                if (jumlah > saldo) {
+                    cout << "Saldo tidak mencukupi." << endl;
+                } else {
+                    saldo -= jumlah;
+                    cout << "Anda telah menarik $" << jumlah << ". Saldo Anda sekarang: $" << saldo << endl;
+                }
+                break;
+            case 3:
+                cout << "Masukkan jumlah yang ingin disetor: $";
+                cin >> jumlah;
+                saldo += jumlah;
+                cout << "Anda telah melakukan setor tunai sebesar $" << jumlah << ". Saldo Anda sekarang: $" << saldo << endl;
+                break;
+            case 4:
+                cout << "Terima kasih telah menggunakan ATM." << endl;
+                break;
+            default:
+                cout << "Pilihan tidak valid. Silakan pilih 1-4." << endl;
+                break;
+        }
+
+        cout << endl;
+    } while (pilihan != 4);
+
+    return 0;
+}
