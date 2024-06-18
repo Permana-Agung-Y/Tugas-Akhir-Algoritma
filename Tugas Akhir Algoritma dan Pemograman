@@ -5,60 +5,404 @@ int main(){
 //  Nama : Permana Agung Yandika
 //  NIM  : 12250514334
 
-#include <iostream>
-using namespace std;
-
-// Fungsi untuk menampilkan menu ATM
-void displayMenu() {
-    cout << "=== ATM Agung ===" << endl;
-    cout << "1. Cek Saldo" << endl;
-    cout << "2. Tarik Tunai" << endl;
-    cout << "3. Setor Tunai" << endl;
-    cout << "4. Keluar" << endl;
-    cout << "================" << endl;
-    cout << "Pilih menu (1-4): ";
-}
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int main() {
-    // Saldo awal ATM
-    double saldo = 50000;
-    int pilihan;
-    double jumlah;
 
-    do {
-        displayMenu();
-        cin >> pilihan;
+    char pin[10];
+    char wrong[10];
+    int chance = 3;
+    int bhs;
 
-        switch (pilihan) {
-            case 1:
-                cout << "Saldo Anda saat ini: $" << saldo << endl;
+    pilihbahasa:
+    printf("Pilih Bahasa : \n");
+    printf("1. Indonesian\n");
+    printf("2. English\n");
+    printf("Masukkan pilihan Anda : ");
+    scanf("%d", &bhs);
+    system("cls");
+
+    // Bahasa Indonesia
+    if (bhs == 1) {
+    ulangilogin:
+        do {
+            printf("=============================\n");
+            printf("Selamat datang di Bank!!\n");
+            printf("=============================\n");
+            printf("Masukkan akun anda!!\n");
+            printf("=============================\n");
+            printf("Masukan PIN Anda : ");
+            scanf("%s", pin);
+            system("cls");
+
+            if (strcmp(pin, "321") == 0) {
                 break;
-            case 2:
-                cout << "Masukkan jumlah yang ingin ditarik: $";
-                cin >> jumlah;
-                if (jumlah > saldo) {
-                    cout << "Saldo tidak mencukupi." << endl;
-                } else {
-                    saldo -= jumlah;
-                    cout << "Anda telah menarik $" << jumlah << ". Saldo Anda sekarang: $" << saldo << endl;
-                }
-                break;
-            case 3:
-                cout << "Masukkan jumlah yang ingin disetor: $";
-                cin >> jumlah;
-                saldo += jumlah;
-                cout << "Anda telah melakukan setor tunai sebesar $" << jumlah << ". Saldo Anda sekarang: $" << saldo << endl;
-                break;
-            case 4:
-                cout << "Terima kasih telah menggunakan ATM." << endl;
-                break;
-            default:
-                cout << "Pilihan tidak valid. Silakan pilih 1-4." << endl;
-                break;
+            }
+            if (chance != 0) {
+                printf("anda punya %d Kesempatan tersisa\n", chance--);
+                goto ulangilogin;
+            } else {
+                printf("Anda telah di block oleh sistem kami!!\n");
+                return -1;
+            }
+        } while (1);
+
+        //Masuk Sistem
+        while (1) {
+            printf("Selamat datang!!\n");
+            printf("=============================\n");
+
+            int command;
+            int money = 0;
+            int balance = 10000000;
+
+            transaksi:
+            balance = balance;
+            printf("Menu Transaksi :\n");
+            printf(" 1 - Setor Tunai\n");
+            printf(" 2 - Tarik tunai\n");
+            printf(" 3 - Transfer\n");
+            printf(" 4 - Sisa Saldo\n");
+            printf(" 5 - Top-Up\n");
+            printf(" 6 - Keluar\n");
+            printf("Masukkan pilihan Anda :");
+            scanf("%d", &command);
+            system("cls");
+
+            int norek;
+            switch (command) {
+                case 1: //Setor tunai
+                    printf("Masukan Nominal uang: ");
+                    scanf("%d", &money);
+                    balance = balance + money;
+                    system("cls");
+                    printf("Transaksi Berhasil! \n");
+                    break;
+
+                case 2: //Tarik Tunai
+                    printf("Nominal uang yang ditarik harus merupakan kelipatan dari 50000\n");
+                    printf("Massukkan nominal yang ingin Anda tarik : ");
+                    scanf("%d", &money);
+                    system("cls");
+                    if (money > balance) {
+                        printf("Transaksi Gagal!\n");
+                        printf("Saldo anda tidak mencukupi untuk melakukan transaksi ini\n");
+                        break;
+                    }
+                    if (money % 50000 == 0) {
+                        balance = balance - money;
+                        printf("Transaksi Berhasi! \n");
+                    } else {
+                        printf("Transaksi Gagal!\n");
+                        printf("Nominal yang Anda masukkan tidak sesuai ketentuan\n");
+                    }
+                    break;
+
+                case 3: //Transfer
+                    printf("Masukkan Nomor Rekening Tujuan : ");
+                    scanf("%d", &norek);
+                    printf("Masukkan Nominal yang ingin Anda transfer : ");
+                    scanf("%d", &money);
+                    system("cls");
+                    if (money > balance) {
+                        printf("Transaksi Gagal!\n");
+                        printf("Saldo anda tidak mencukupi untuk melakukan transaksi ini\n");
+                    } else {
+                        balance = balance - money;
+                        printf("Transaksi Berhasil! \n");
+                        printf("Transfer Rp.%d\n", money);
+                        printf("\n");
+                        printf("Dari Tabungan\n");
+                        printf("No Rekening\t: %d\n", 12345678);
+                        printf("\n");
+                        printf("Penerima \t: AGUNG\n");
+                        printf("No Rekening \t: %d\n", norek);
+                        printf("\n");
+                    }
+                    break;
+
+                case 4: //Cek Saldo
+                    break;
+
+                case 5:
+                    printf("Menu Top-Up :\n");
+                    printf("1. Shopee\n");
+                    printf("2. DANA\n");
+                    printf("3. OVO\n");
+                    printf("4. Kembali ke menu utama\n");
+                    printf("Masukkan pilihan Anda : ");
+                    scanf("%d", &command);
+                    system("cls");
+                    if (command == 1 || command == 2 || command == 3) {
+                        printf("Masukkan nominal Top-Up :\n");
+                        scanf("%d", &money);
+                        if (money > balance) {
+                            printf("Transaksi Gagal!\n");
+                            printf("Saldo anda tidak mencukupi untuk melakukan transaksi ini\n");
+                            break;
+                        }
+                    }
+                    switch (command) {
+                        case 1:
+                            printf("Masukkan Nomor Shopee :\n");
+                            scanf("%d", &norek);
+                            system("cls");
+                            balance = balance - money;
+                            printf("Top-Up Shopee Berhasil! \n");
+                            printf("Transaksi Rp. %d\n", money);
+                            printf("Nomor Shopee : %d\n", norek);
+                            break;
+
+                        case 2:
+                            printf("Masukkan Nomor DANA :\n");
+                            scanf("%d", &norek);
+                            system("cls");
+                            balance = balance - money;
+                            printf("Top-Up DANA Berhasil! \n");
+                            printf("Transaksi Rp. %d\n", money);
+                            printf("Nomor DANA : %d\n", norek);
+                            break;
+
+                        case 3:
+                            printf("Masukkan Nomor OVO:\n");
+                            scanf("%d", &norek);
+                            system("cls");
+                            balance = balance - money;
+                            printf("Top-Up OVO Berhasil! \n");
+                            printf("Transaksi Rp. %d\n", money);
+                            printf("Nomor OVO : %d\n", norek);
+                            break;
+
+                        case 4:
+                            system("cls");
+                            goto transaksi;
+                            break;
+
+                        default:
+                            printf("SALAH! angka yang anda masukan salah!!\n");
+                            break;
+                    }
+                    break;
+
+                case 6: //Keluar
+                    goto pilihbahasa;
+                    break;
+
+                default: //Handle other values
+                    printf("SALAH! angka yang anda masukan salah!!\n");
+                    break;
+            }
+
+            //print final balance
+            int cont;
+            printf("=============================\n");
+            printf("Saldo anda saat ini : %d\n", balance);
+            printf("=============================\n");
+            printf("apakah anda akan melakukan transaksi lagi?\n");
+            printf("1.Ya   2.Tidak\n");
+            printf("Masukkan pilihan Anda : ");
+            scanf("%d", &cont);
+
+            if (cont == 1) {
+                system("cls");
+                goto transaksi;
+            } else {
+                printf("Terima kasih, Sampai jumpa lagi!!\n");
+            }
+            return 0;
         }
+    }
 
-        cout << endl;
-    } while (pilihan != 4);
+    // Bahasa Inggris
+    if (bhs == 2) {
+    repeatlogin:
+        do {
+            printf("=============================\n");
+            printf("Welcome to the Bank!!\n");
+            printf("=============================\n");
+            printf("Login to your account!!\n");
+            printf("=============================\n");
+            printf("Enter your pin :  ");
+            scanf("%s", pin);
+            system("cls");
 
-    return 0;
+            if (strcmp(pin, "123") == 0) {
+                break;
+            }
+            if (chance != 0) {
+                printf("You have %d more chance left\n", chance--);
+                goto repeatlogin;
+            } else {
+                printf("You're being blocked out from our system!!\n");
+                return -1;
+            }
+        } while (1);
+
+        //Masuk Sistem
+        while (1) {
+            printf("Welcome!!\n");
+            printf("=============================\n");
+
+            int command;
+            int money = 0;
+            int balance = 10000000;
+
+            transaction:
+            balance = balance;
+            printf("Transaction menu :\n");
+            printf(" 1 - Deposit money\n");
+            printf(" 2 - Withdraw money\n");
+            printf(" 3 - Transfer\n");
+            printf(" 4 - Balance check\n");
+            printf(" 5 - Top-Up\n");
+            printf(" 6 - Quit\n");
+            printf("Enter your choice :");
+            scanf("%d", &command);
+            system("cls");
+
+            int norek;
+            switch (command) {
+                case 1: //Setor tunai
+                    printf("Enter the nominal amount of money : ");
+                    scanf("%d", &money);
+                    balance = balance + money;
+                    system("cls");
+                    printf("Transaction successful! \n");
+                    break;
+
+                case 2: //Tarik Tunai
+                    printf("The nominal amount withdrawn must be a multiple of 50000\n");
+                    printf("Enter the amount you want to withdraw : ");
+                    scanf("%d", &money);
+                    system("cls");
+                    if (money > balance) {
+                        printf("Transaction Failed!\n");
+                        printf("Your balance is insufficient to carry out this transaction\n");
+                        break;
+                    }
+                    if (money % 50000 == 0) {
+                        balance = balance - money;
+                        printf("Transaction successful! \n");
+                    } else {
+                        printf("Transaction Failed! \n");
+                        printf("The nominal you entered does not comply with the provisions!\n");
+                    }
+                    break;
+
+                case 3: //Transfer
+                    printf("enter the destination account number : ");
+                    scanf("%d", &norek);
+                    printf("Enter the amount you want to transfer : ");
+                    scanf("%d", &money);
+                    system("cls");
+                    if (money > balance) {
+                        printf("Transaction Failed!\n");
+                        printf("Your balance is insufficient to carry out this transaction\n");
+                    } else {
+                        balance = balance - money;
+                        printf("Transaction successful! \n");
+                        printf("Transaction Rp.%d\n", money);
+                        printf("\n");
+                        printf("From saving\n");
+                        printf("Account number\t: %d\n", 12345678);
+                        printf("\n");
+                        printf("Recipient \t: AGUNG\n");
+                        printf("Account number \t: %d\n", norek);
+                        printf("\n");
+                    }
+                    break;
+
+                case 4: //Cek Saldo
+                    break;
+
+                case 5:
+                    printf("Top-Up menu :\n");
+                    printf("1. Shopee\n");
+                    printf("2. DANA\n");
+                    printf("3. OVO\n");
+                    printf("4. Return to the main menu\n");
+                    printf("Enter your choice : ");
+                    scanf("%d", &command);
+                    system("cls");
+                    if (command == 1 || command == 2 || command == 3) {
+                        printf("Enter the top-up nominal : ");
+                        scanf("%d", &money);
+                        if (money > balance) {
+                            printf("Transaction Failed!\n");
+                            printf("Your balance is insufficient to carry out this transaction\n");
+                            break;
+                        }
+                    }
+                    switch (command) {
+                        case 1:
+                            printf("Enter Shopee number :\n");
+                            scanf("%d", &norek);
+                            system("cls");
+                            balance = balance - money;
+                            printf("Top-Up Shopee Successful! \n");
+                            printf("Transaction Rp. %d\n", money);
+                            printf("Shopee number : %d\n", norek);
+                            break;
+
+                        case 2:
+                            printf("Enter DANA number:\n");
+                            scanf("%d", &norek);
+                            system("cls");
+                            balance = balance - money;
+                            printf("Top-Up DANA Successful! \n");
+                            printf("Transaction Rp. %d\n", money);
+                            printf("DANA number : %d\n", norek);
+                            break;
+
+                        case 3:
+                            printf("Enter OVO number :\n");
+                            scanf("%d", &norek);
+                            system("cls");
+                            balance = balance - money;
+                            printf("Top-Up OVO Successful! \n");
+                            printf("Transaction Rp. %d\n", money);
+                            printf("OVO number : %d\n", norek);
+                            break;
+
+                        case 4:
+                            system("cls");
+                            goto transaction;
+                            break;
+
+                        default:
+                            printf("Oops! your value are invalid!!\n");
+                            break;
+                    }
+                    break;
+
+                case 6: //Keluar
+                    goto pilihbahasa;
+                    break;
+
+                default: //Handle other values
+                    printf("Oops! your value are invalid!!\n");
+                    break;
+            }
+
+            //print final balance
+            int cont;
+            printf("=============================\n");
+            printf("Your final balance are : %d\n", balance);
+            printf("=============================\n");
+            printf("Dou you want to continue the transaction?\n");
+            printf("1.Yes   2.No\n");
+            printf("Enter your choice : ");
+            scanf("%d", &cont);
+
+            if (cont == 1) {
+                system("cls");
+                goto transaction;
+            } else {
+                printf("Thank you, Please come back later!!\n");
+            }
+            return 0;
+        }
+    }
 }
